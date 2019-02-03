@@ -13,7 +13,7 @@ class start(Resource):
 
 class GetAirportDetails(Resource):
     def get(self, APcode):
-        csv_file = csv.reader(open('./airports.csv', "rb"), delimiter=",")
+        csv_file = csv.reader(open('/airports.csv', "rb"), delimiter=",")
         for row in csv_file:
             if APcode == row[4]:
                 return jsonify({'Airport ID': row[0], 'Name': row[1], 'City': row[2], 'Country': row[3], 'IATA': row[4], 'ICAO': row[5], 'Latitude': row[6], 'Longitude': row[7]})
