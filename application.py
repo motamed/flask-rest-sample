@@ -1,9 +1,14 @@
+from os.path import join, dirname, realpath
 import csv
 from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
 
 app = Flask(__name__)
 api = Api(app)
+
+airportsFile = join(dirname(realpath(__file__)), 'airports.csv')
+airlineFile = join(dirname(realpath(__file__)), 'airlines.csv')
+
 
 
 class start(Resource):
@@ -13,7 +18,7 @@ class start(Resource):
 
 class GetAirportDetails(Resource):
     def get(self, APcode):
-        csv_file = csv.reader(open('/airports.csv', "rb"), delimiter=",")
+        csv_file = csv.reader(open(  airportsFile, "rb"), delimiter=",")
         for row in csv_file:
             if APcode == row[4]:
                 return jsonify({'Airport ID': row[0], 'Name': row[1], 'City': row[2], 'Country': row[3], 'IATA': row[4], 'ICAO': row[5], 'Latitude': row[6], 'Longitude': row[7]})
@@ -21,7 +26,7 @@ class GetAirportDetails(Resource):
 
 class GetAirportName(Resource):
     def get(self, APcode):
-        csv_file = csv.reader(open('/airports.csv', "rb"), delimiter=",")
+        csv_file = csv.reader(open(airportsFile, "rb"), delimiter=",")
         for row in csv_file:
             if APcode == row[4]:
                 return jsonify({'Airport': row[1]})
@@ -29,7 +34,7 @@ class GetAirportName(Resource):
 
 class GetAirportLocation(Resource):
     def get(self, APcode):
-        csv_file = csv.reader(open('/airports.csv', "rb"), delimiter=",")
+        csv_file = csv.reader(open(airportsFile, "rb"), delimiter=",")
         for row in csv_file:
             if APcode == row[4]:
                 return jsonify({'Latitude': row[6], 'Longitude': row[7]})
@@ -37,7 +42,7 @@ class GetAirportLocation(Resource):
 
 class GetAirlineDetails(Resource):
     def get(self, IATA):
-        csv_file = csv.reader(open('/airlines.csv', "rb"), delimiter=",")
+        csv_file = csv.reader(open(airlineFile, "rb"), delimiter=",")
         for row in csv_file:
             if IATA == row[3]:
                 return jsonify({'Airline ID': row[0], 'Name': row[1], 'Alias': row[2], 'IATA': row[3], 'ICAO': row[4], 'Callsign': row[5], 'Country': row[6], 'Active': row[7]})
@@ -45,7 +50,7 @@ class GetAirlineDetails(Resource):
 
 class GetAirlineIATA(Resource):
     def get(self, AID):
-        csv_file = csv.reader(open('/airlines.csv', "rb"), delimiter=",")
+        csv_file = csv.reader(open(airlineFile, "rb"), delimiter=",")
         for row in csv_file:
             if AID == row[0]:
                 return jsonify({'Name': row[1], 'IATA': row[3]})
