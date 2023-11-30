@@ -65,4 +65,4 @@ $ python application.py
     
 ## Reference
 
-> __Airport__ and __Airline__ data from https://openflights.org/data.html
+> __Airport__ and __Airline__ data from https://openflights.org/data
